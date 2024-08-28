@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<scenario name="PHONE to CCS call - Called">
+
+    <recv request="INVITE" crlf="true">
+        <action>
+            <ereg regexp=".*sip:(.*);lr(.*)" search_in="hdr" header="Record-Route" occurrence="1" check_it="true" assign_to="1,2,3"/>
+            <ereg regexp=".*sip:(.*);lr(.*)" search_in="hdr" header="Record-Route" occurrence="2" check_it="true" assign_to="4,5,6"/>
+            <ereg regexp=".* (.*):(.*);branch=(.*);.*" search_in="hdr" header="Via" occurrence="1" check_it="true" assign_to="7,8,9,10"/>
+            <ereg regexp=".*" search_in="hdr" header="Via" occurrence="2" check_it="true" assign_to="11"/>
+            <ereg regexp=".*" search_in="hdr" header="Via" occurrence="3" check_it="true" assign_to="12"/>
+            <ereg regexp=".*sip:(.*);.*" search_in="hdr" header="To" check_it="true" assign_to="13,14"/>
+        </action>
+    </recv>
+
+    <Reference variables="1,4,7,13" />
+
+
+    <send>
+    <![CDATA[
+SIP/2.0 100 Trying
+Via: SIP/2.0/UDP [$8]:[$9];rport=[$9];received=[$8];branch=[$10]
+Via[$11]
+Via[$12]
+Record-Route: <sip:[$2];lr[$3]
+Record-Route: <sip:[$5];lr[$6]
+[last_From:]
+[last_To:]
+[last_Call-ID:]
+[last_CSeq:]
+Allow-Events: telephone-event
+Server: Sipp/3.7.2
+Content-Length: 0
+    ]]>
+    </send>
+
+
+    <send>
+    <![CDATA[
+SIP/2.0 180 Ringing
+Via: SIP/2.0/UDP [$8]:[$9];rport=[$9];received=[$8];branch=[$10]
+Via[$11]
+Via[$12]
+[last_Call-ID:]
+[last_From:]
+[last_To:];tag=[call_number]
+[last_CSeq:]
+Allow: INVITE,ACK,OPTIONS,BYE,CANCEL,INFO,PRACK,NOTIFY,MESSAGE,REFER,UPDATE
+Contact: <sip:[$14];transport=udp>
+Record-Route: <sip:[$2];lr[$3]
+Record-Route: <sip:[$5];lr[$6]
+Content-Length: 0
+    ]]>
+    </send>
+
+
+    <pause milliseconds="2000" />
+
+
+    <send>
+    <![CDATA[
+SIP/2.0 200 OK
+Via: SIP/2.0/UDP [$8]:[$9];rport=[$9];received=[$8];branch=[$10]
+Via[$11]
+Via[$12]
+[last_Call-ID:]
+[last_From:]
+[last_To:];tag=[call_number]
+CSeq: 101 INVITE
+Allow: INVITE,ACK,OPTIONS,BYE,CANCEL,INFO,PRACK,NOTIFY,MESSAGE,REFER,UPDATE
+Contact: <sip:[$14];transport=udp>
+Record-Route: <sip:[$2];lr[$3]
+Record-Route: <sip:[$5];lr[$6]
+Supported: replaces, 100rel, timer, norefersub
+Content-Type: application/sdp
+Content-Length: [len]
+
+v=0
+o=SIPP 1733 1959 IN IP[local_ip_type] 172.25.104.169
+s=SIP Call
+c=IN IP[media_ip_type] 172.25.104.169
+t=0 0
+m=audio [media_port] RTP/AVP 8
+a=rtcp:4007 IN IP[media_ip_type] 172.25.104.169
+a=sendrecv
+a=rtpmap:0 PCMU/8000
+a=rtpmap:8 PCMA/8000
+a=rtpmap:116 iLBC/8000
+a=fmtp:116 mode=20
+a=rtpmap:18 G729/8000
+a=fmtp:18 annexb=yes
+a=rtpmap:101 telephone-event/8000
+a=fmtp:101 0-15
+    ]]>
+    </send>
+
+
+    <recv request="ACK" crlf="true" />
+
+    <recv request="INVITE" crlf="true">
+        <action>
+            <ereg regexp=".* (.*):(.*);branch=(.*);.*" search_in="hdr" header="Via" occurrence="1" check_it="true" assign_to="15,16,17,18"/>
+            <ereg regexp=".*" search_in="hdr" header="Via" occurrence="2" check_it="true" assign_to="19"/>
+            <ereg regexp=".*" search_in="hdr" header="Via" occurrence="3" check_it="true" assign_to="20"/>
+            <ereg regexp=".*sip:(.*);.*" search_in="hdr" header="To" check_it="true" assign_to="21,22"/>
+        </action>
+    </recv>
+
+    <Reference variables="15,21" />
+
+    <send>
+    <![CDATA[
+SIP/2.0 100 Trying
+Via: SIP/2.0/UDP [$16]:[$17];rport;branch=[$18]
+Via[$19]
+Via[$20]
+[last_From:]
+[last_To:]
+[last_Call-ID:]
+CSeq: 102 INVITE
+Allow: INVITE,ACK,OPTIONS,BYE,CANCEL,INFO,PRACK,NOTIFY,MESSAGE,REFER,UPDATE
+Contact: <sip:[$22];transport=udp>
+Allow-Events: telephone-event
+Server: Sipp/3.7.2
+Content-Length: 0
+    ]]>
+    </send>
+
+    <send>
+    <![CDATA[
+SIP/2.0 200 OK
+Via: SIP/2.0/UDP [$16]:[$17];rport;branch=[$18]
+Via[$19]
+Via[$20]
+[last_Call-ID:]
+[last_From:]
+[last_To:]
+CSeq: 102 INVITE
+Allow: INVITE,ACK,OPTIONS,BYE,CANCEL,INFO,PRACK,NOTIFY,MESSAGE,REFER,UPDATE
+Contact: <sip:[$22];transport=udp>
+Supported: replaces, 100rel, timer, norefersub
+Content-Type: application/sdp
+Content-Length: [len]
+
+v=0
+o=SIPP 1733 1959 IN IP[local_ip_type] 172.25.104.169
+s=SIP Call
+c=IN IP[media_ip_type] 172.25.104.169
+t=0 0
+m=audio [media_port] RTP/AVP 8
+a=rtcp:4007 IN IP[media_ip_type] 172.25.104.169
+a=sendrecv
+a=rtpmap:0 PCMU/8000
+a=rtpmap:8 PCMA/8000
+a=rtpmap:116 iLBC/8000
+a=fmtp:116 mode=20
+a=rtpmap:18 G729/8000
+a=fmtp:18 annexb=yes
+a=rtpmap:101 telephone-event/8000
+a=fmtp:101 0-15
+    ]]>
+    </send>
+
+
+    <recv request="UPDATE" crlf="true">
+            <action>
+            <ereg regexp=".* (.*):(.*);branch=(.*);.*" search_in="hdr" header="Via" occurrence="1" check_it="true" assign_to="23,24,25,26"/>
+            <ereg regexp=".*" search_in="hdr" header="Via" occurrence="2" check_it="true" assign_to="27"/>
+            <ereg regexp=".*" search_in="hdr" header="Via" occurrence="3" check_it="true" assign_to="28"/>
+            <ereg regexp=".*sip:(.*);.*" search_in="hdr" header="To" check_it="true" assign_to="29,30"/>
+        </action>
+    </recv>
+
+    <Reference variables="23,29" />
+
+    <recv request="ACK" crlf="true" />
+
+    <send>
+    <![CDATA[
+SIP/2.0 200 OK
+Via: SIP/2.0/UDP [$24]:[$25];rport=[$25];received=[$24];branch=[$26]
+Via[$27]
+Via[$28]
+[last_Call-ID:]
+[last_From:]
+[last_To:]
+CSeq: 103 UPDATE
+Record-Route: <sip:[$2];lr[$3]
+Allow: INVITE,ACK,OPTIONS,BYE,CANCEL,INFO,PRACK,NOTIFY,MESSAGE,REFER,UPDATE
+Contact: <sip:[$30];transport=udp>
+Supported: replaces, 100rel, timer, norefersub
+Content-Length: 0
+    ]]>
+    </send>
+
+
+    <recv request="INVITE" crlf="true">
+        <action>
+            <ereg regexp=".* (.*):(.*);branch=(.*);.*" search_in="hdr" header="Via" occurrence="1" check_it="true" assign_to="31,32,33,34"/>
+            <ereg regexp=".*" search_in="hdr" header="Via" occurrence="2" check_it="true" assign_to="35"/>
+            <ereg regexp=".*" search_in="hdr" header="Via" occurrence="3" check_it="true" assign_to="36"/>
+            <ereg regexp=".*sip:(.*);.*" search_in="hdr" header="To" check_it="true" assign_to="37,38"/>
+        </action>
+    </recv>
+
+    <Reference variables="31,37" />
+
+    <send>
+    <![CDATA[
+SIP/2.0 200 OK
+Via: SIP/2.0/UDP [$32]:[$33];rport;branch=[$34]
+Via[$35]
+Via[$36]
+[last_Call-ID:]
+[last_From:]
+[last_To:]
+CSeq: 104 INVITE
+Allow: INVITE,ACK,OPTIONS,BYE,CANCEL,INFO,PRACK,NOTIFY,MESSAGE,REFER,UPDATE
+Contact: <sip:[$38];transport=udp>
+Supported: replaces, 100rel, timer, norefersub
+Content-Type: application/sdp
+Content-Length: [len]
+
+v=0
+o=SIPP 1733 1959 IN IP[local_ip_type] 172.25.104.169
+s=SIP Call
+c=IN IP[media_ip_type] 172.25.104.169
+t=0 0
+m=audio [media_port] RTP/AVP 8
+a=rtcp:4007 IN IP[media_ip_type] 172.25.104.169
+a=sendrecv
+a=rtpmap:0 PCMU/8000
+a=rtpmap:8 PCMA/8000
+a=rtpmap:116 iLBC/8000
+a=fmtp:116 mode=20
+a=rtpmap:18 G729/8000
+a=fmtp:18 annexb=yes
+a=rtpmap:101 telephone-event/8000
+a=fmtp:101 0-15
+    ]]>
+    </send>
+
+
+    <recv request="ACK" crlf="true" />
+
+    <recv request="INVITE" crlf="true">
+        <action>
+            <ereg regexp=".* (.*):(.*);branch=(.*);.*" search_in="hdr" header="Via" occurrence="1" check_it="true" assign_to="39,40,41,42"/>
+            <ereg regexp=".*" search_in="hdr" header="Via" occurrence="2" check_it="true" assign_to="43"/>
+            <ereg regexp=".*" search_in="hdr" header="Via" occurrence="3" check_it="true" assign_to="44"/>
+            <ereg regexp=".*sip:(.*);.*" search_in="hdr" header="To" check_it="true" assign_to="45,46"/>
+        </action>
+    </recv>
+
+    <Reference variables="39,45" />
+
+    <send>
+    <![CDATA[
+SIP/2.0 200 OK
+Via: SIP/2.0/UDP [$40]:[$41];rport;branch=[$42]
+Via[$43]
+Via[$44]
+[last_Call-ID:]
+[last_From:]
+[last_To:]
+CSeq: 105 INVITE
+Allow: INVITE,ACK,OPTIONS,BYE,CANCEL,INFO,PRACK,NOTIFY,MESSAGE,REFER,UPDATE
+Contact: <sip:[$46];transport=udp>
+Supported: replaces, 100rel, timer, norefersub
+Content-Type: application/sdp
+Content-Length: [len]
+
+v=0
+o=SIPP 1733 1959 IN IP[local_ip_type] 172.25.104.169
+s=SIP Call
+c=IN IP[media_ip_type] 172.25.104.169
+t=0 0
+m=audio [media_port] RTP/AVP 8
+a=rtcp:4007 IN IP[media_ip_type] 172.25.104.169
+a=sendrecv
+a=rtpmap:0 PCMU/8000
+a=rtpmap:8 PCMA/8000
+a=rtpmap:116 iLBC/8000
+a=fmtp:116 mode=20
+a=rtpmap:18 G729/8000
+a=fmtp:18 annexb=yes
+a=rtpmap:101 telephone-event/8000
+a=fmtp:101 0-15
+    ]]>
+    </send>
+
+
+    <recv request="ACK" crlf="true" />
+
+
+    <recv request="BYE" crlf="true" />
+
+
+    <send>
+    <![CDATA[
+SIP/2.0 200 OK
+[last_Via:]
+[last_Call-ID:]
+[last_From:]
+[last_To:];tag=[call_number]
+[last_CSeq:]
+Record-Route: <sip:[$2];lr[$3]
+Record-Route: <sip:[$5];lr[$6]
+    ]]>
+    </send>
+
+
+    <recv request="ACK" crlf="true" optional="true" />
+
+</scenario>

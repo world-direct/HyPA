@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<scenario name="PHONE to CCS Registration - Unregister">
+
+    <send>
+    <![CDATA[
+REGISTER sip:[field0].ibk.sip.ccint.loc SIP/2.0
+Via: SIP/2.0/UDP 172.25.104.169:[local_port];branch=z9hG4bK40364815
+From: <sip:[field2].SEP[field1]@[field0].ibk.sip.ccint.loc>;tag=[field1]00716311f69b-32591757
+To: <sip:[field2].SEP[field1]@[field0].ibk.sip.ccint.loc>
+Call-ID: phone2ccs_unregister///[call_id]
+Max-Forwards: 70
+Session-ID: 6afbd92b00105000a000[field1];remote=00000000000000000000000000000000
+Date: Tue, 09 Man 2024 18:00:00 GMT
+CSeq: 1 REGISTER
+User-Agent: Sipp/3.7.2
+Contact: <sip:[field2].SEP[field1]@172.25.104.169:5063;transport=udp>;+sip.instance="<urn:uuid:00000000-0000-0000-0000-[field1]>";+u.sip!devicename.ccm.cisco.com="SEP[field1]";+u.sip!model.ccm.cisco.com="685"
+Supported: replaces,join,sdp-anat,norefersub,resource-priority,extended-refer,X-cisco-callinfo,X-cisco-serviceuri,X-cisco-escapecodes,X-cisco-service-control,X-cisco-srtp-fallback,X-cisco-monrec,X-cisco-config,X-cisco-sis-7.0.0,X-cisco-xsi-8.5.1
+Content-Length: 0
+Expires: 0
+    ]]>
+    </send>
+
+
+    <recv response="200" />
+
+</scenario>

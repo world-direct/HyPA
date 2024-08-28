@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<scenario name="CCS to Phone Registration - REFER">
+
+    <recv request="REFER" />
+
+    <send>
+    <![CDATA[
+SIP/2.0 200 OK
+[last_Via:]
+[last_Call-ID:]
+[last_From:]
+[last_To:];tag=[call_number]
+[last_CSeq:]
+    ]]>
+    </send>
+
+</scenario>
