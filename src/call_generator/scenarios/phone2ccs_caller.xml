@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<scenario name="PHONE to CCS call - Caller">
+
+    <send>
+    <![CDATA[
+INVITE sip:[field2]@[field0].ibk.sip.ccint.loc;user=phone SIP/2.0
+Via: SIP/2.0/UDP 172.25.104.169:[local_port];rport;branch=z9hG4bKA7469318
+From: <sip:555.SEP[field3]@[field0].ibk.sip.ccint.loc>;tag=[field3]00716311f69b-6805d381
+To: <sip:[field2]@[field0].ibk.sip.ccint.loc>
+Call-ID: phone2ccs_caller///[call_id]
+Max-Forwards: 70
+Session-ID: 52a1a77b00105000a000[field3];remote=00000000000000000000000000000000
+Date: Tue, 09 Man 2024 18:00:00 GMT
+CSeq: 101 INVITE
+User-Agent: Sipp/3.7.2
+Contact: <sip:555.SEP[field3]@172.25.104.169:[field4];transport=udp>;+u.sip!devicename.ccm.cisco.com="SEP[field3]"
+Expires: 180
+Accept: application/sdp
+Allow: ACK,BYE,CANCEL,INVITE,NOTIFY,OPTIONS,REFER,REGISTER,UPDATE,SUBSCRIBE,INFO
+Remote-Party-ID: <sip:555.SEP[field3]@[field0].ibk.sip.ccint.loc>;party=calling;id-type=subscriber;privacy=off;screen=yes
+Supported:  replaces,join,sdp-anat,norefersub,resource-priority,extended-refer,X-cisco-callinfo,X-cisco-serviceuri,X-cisco-escapecodes,X-cisco-service-control,X-cisco-srtp-fallback,X-cisco-monrec,X-cisco-config,X-cisco-sis-7.0.0,X-cisco-xsi-8.5.1
+Allow-Events: kpml,dialog
+Recv-Info:  conference
+Recv-Info:  x-cisco-conference
+Content-Length: [len]
+Content-Type: application/sdp
+Content-Disposition: session;handling=optional
+
+v=0
+o=Sipp 73179 73179 IN IP[local_ip_type] 172.25.104.169
+s=SIP Call
+b=AS:4064
+t=0 0
+m=audio [media_port] RTP/AVP 0 8 116 18 101
+c=IN IP[media_ip_type] [media_ip]
+b=TIAS:64000
+a=rtpmap:0 PCMU/8000
+a=rtpmap:8 PCMA/8000
+a=rtpmap:116 iLBC/8000
+a=fmtp:116 mode=20
+a=rtpmap:18 G729/8000
+a=fmtp:18 annexb=yes
+a=rtpmap:101 telephone-event/8000
+a=fmtp:101 0-15
+a=sendrecv
+    ]]>
+    </send>
+
+
+    <recv response="100" />
+
+    <recv response="180" />
+
+    <recv response="200">
+        <action>
+            <ereg regexp=".*sip:(.*);lr(.*)" search_in="hdr" header="Record-Route" occurrence="1" check_it="true" assign_to="1,2,3"/>
+            <ereg regexp=".*sip:(.*);lr(.*)" search_in="hdr" header="Record-Route" occurrence="2" check_it="true" assign_to="4,5,6"/>
+            <ereg regexp=".*sip:(.*)>" search_in="hdr" header="Contact" check_it="true" assign_to="7,8"/>
+        </action>
+    </recv>
+
+    <Reference variables="1,4,7" />
+
+
+    <send>
+    <![CDATA[
+ACK sip:[$8][$6] SIP/2.0
+Via: SIP/2.0/[transport] 172.25.104.169:[local_port];rport;branch=[branch]
+From: <sip:555.SEP[field3]@[field0].ibk.sip.ccint.loc:[local_port]>;tag=[field3]00716311f69b-6805d381
+To: <sip:[field2]@[field0].ibk.sip.ccint.loc:[field4]>[peer_tag_param]
+[last_Call-ID:]
+Max-Forwards: 70
+CSeq: 101 ACK
+Route: <sip:[$5];lr[$6]
+Route: <sip:[$2];lr[$3]
+Remote-Party-ID: <sip:555.SEP[field3]@[field0].ibk.sip.ccint.loc>;party=calling;id-type=subscriber;privacy=off;screen=yes
+Content-Length: 0
+    ]]>
+    </send>
+
+    <recv request="INVITE" crlf="true">
+        <action>
+            <ereg regexp=".* (.*):(.*);branch=(.*);.*" search_in="hdr" header="Via" occurrence="1" check_it="true" assign_to="15,16,17,18"/>
+            <ereg regexp=".*" search_in="hdr" header="Via" occurrence="2" check_it="true" assign_to="19"/>
+            <ereg regexp=".*" search_in="hdr" header="Via" occurrence="3" check_it="true" assign_to="20"/>
+            <ereg regexp=".*sip:(.*);.*" search_in="hdr" header="To" check_it="true" assign_to="21,22"/>
+        </action>
+    </recv>
+
+    <Reference variables="15,21" />
+
+    <send>
+    <![CDATA[
+SIP/2.0 100 Trying
+Via: SIP/2.0/UDP [$16]:[$17];rport;branch=[$18]
+Via[$19]
+Via[$20]
+[last_From:]
+[last_To:]
+[last_Call-ID:]
+CSeq: 102 INVITE
+Allow: INVITE,ACK,OPTIONS,BYE,CANCEL,INFO,PRACK,NOTIFY,MESSAGE,REFER,UPDATE
+Contact: <sip:[$22];transport=udp>
+Allow-Events: telephone-event
+Server: Sipp/3.7.2
+Content-Length: 0
+    ]]>
+    </send>
+
+    <send>
+    <![CDATA[
+SIP/2.0 200 OK
+Via: SIP/2.0/UDP [$16]:[$17];rport;branch=[$18]
+Via[$19]
+Via[$20]
+[last_Call-ID:]
+[last_From:]
+[last_To:]
+CSeq: 101 INVITE
+Allow: INVITE,ACK,OPTIONS,BYE,CANCEL,INFO,PRACK,NOTIFY,MESSAGE,REFER,UPDATE
+Contact: <sip:[$22];transport=udp>
+Supported: replaces, 100rel, timer, norefersub
+Content-Type: application/sdp
+Content-Length: [len]
+
+v=0
+o=SIPP 1733 1959 IN IP[local_ip_type] 172.25.104.169
+s=SIP Call
+c=IN IP[media_ip_type] 172.25.104.169
+t=0 0
+m=audio [media_port] RTP/AVP 8
+a=rtcp:4007 IN IP[media_ip_type] 172.25.104.169
+a=sendrecv
+a=rtpmap:0 PCMU/8000
+a=rtpmap:8 PCMA/8000
+a=rtpmap:116 iLBC/8000
+a=fmtp:116 mode=20
+a=rtpmap:18 G729/8000
+a=fmtp:18 annexb=yes
+a=rtpmap:101 telephone-event/8000
+a=fmtp:101 0-15
+    ]]>
+    </send>
+
+    <recv request="UPDATE" crlf="true">
+            <action>
+            <ereg regexp=".* (.*):(.*);branch=(.*);.*" search_in="hdr" header="Via" occurrence="1" check_it="true" assign_to="23,24,25,26"/>
+            <ereg regexp=".*" search_in="hdr" header="Via" occurrence="2" check_it="true" assign_to="27"/>
+            <ereg regexp=".*" search_in="hdr" header="Via" occurrence="3" check_it="true" assign_to="28"/>
+            <ereg regexp=".*sip:(.*);.*" search_in="hdr" header="To" check_it="true" assign_to="29,30"/>
+        </action>
+    </recv>
+
+    <Reference variables="23,29" />
+
+
+
+    <send>
+    <![CDATA[
+SIP/2.0 200 OK
+Via: SIP/2.0/UDP [$24]:[$25];rport=[$25];received=[$24];branch=[$26]
+Via[$27]
+Via[$28]
+[last_Call-ID:]
+[last_From:]
+[last_To:]
+CSeq: 102 UPDATE
+Record-Route: <sip:[$2];lr[$3]
+Allow: INVITE,ACK,OPTIONS,BYE,CANCEL,INFO,PRACK,NOTIFY,MESSAGE,REFER,UPDATE
+Contact: <sip:[$30];transport=udp>
+Supported: replaces, 100rel, timer, norefersub
+Content-Length: 0
+    ]]>
+    </send>
+
+
+    <pause milliseconds="5000" />
+
+
+    <send>
+    <![CDATA[
+BYE sip:[$8] SIP/2.0
+Via: SIP/2.0/[transport] 172.25.104.169:[local_port];rport;branch=[branch]
+From: <sip:555.SEP[field3]@[field0].ibk.sip.ccint.loc>;tag=[field3]00716311f69b-6805d381
+To: <sip:[field2]@[field0].ibk.sip.ccint.loc>[peer_tag_param]
+[last_Call-ID:]
+Max-Forwards: 70
+Date: Tue, 09 Man 2024 18:00:00 GMT
+CSeq: 101 BYE
+Reason: Q.850;cause=16;text="Normal call clearing"
+Route: <sip:[$5];lr[$6]
+Route: <sip:[$2];lr[$3]
+User-Agent: Sipp/3.7.2
+Content-Length: 0
+    ]]>
+    </send>
+
+
+    <recv response="200" />
+
+</scenario>

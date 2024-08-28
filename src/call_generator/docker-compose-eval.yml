@@ -1,0 +1,56 @@
+services:
+
+  uac_hpa:
+    container_name: uac_hpa
+    image: sipp:3.7.2
+    entrypoint: "tail -f /dev/null"
+    volumes:
+      - ./scenarios/:/scenarios/
+    ports:
+      - 5060:5060/udp
+    networks:
+      hypa:
+        ipv4_address: 172.23.0.10
+
+  uac_hypa:
+    container_name: uac_hypa
+    image: sipp:3.7.2
+    entrypoint: "tail -f /dev/null"
+    volumes:
+      - ./scenarios/:/scenarios/
+    ports:
+      - 5061:5060/udp
+    networks:
+      hypa:
+        ipv4_address: 172.23.0.11
+
+  uac_moha:
+    container_name: uac_moha
+    image: sipp:3.7.2
+    entrypoint: "tail -f /dev/null"
+    volumes:
+      - ./scenarios/:/scenarios/
+    ports:
+      - 5062:5060/udp
+    networks:
+      hypa:
+        ipv4_address: 172.23.0.12
+
+  uas:
+    container_name: uas
+    image: sipp:3.7.2
+    entrypoint: "tail -f /dev/null"
+    volumes:
+      - ./scenarios/:/scenarios/
+    ports:
+      - 5063:5060/udp
+    networks:
+      hypa:
+        ipv4_address: 172.23.0.13
+
+networks:
+  hypa:
+    name: hypa
+    ipam:
+      config:
+        - subnet: 172.23.0.0/24

@@ -1,0 +1,308 @@
+services:
+
+  uac-tc01:
+    container_name: uac-tc01
+    image: sipp:3.7.2
+    entrypoint: "tail -f /dev/null"
+    volumes:
+      - ./scenarios/:/scenarios/
+    ports:
+      - 5060:5060/udp
+    networks:
+      hypa:
+        ipv4_address: 172.23.0.10
+
+  uac-tc02:
+    container_name: uac-tc02
+    image: sipp:3.7.2
+    entrypoint: "tail -f /dev/null"
+    volumes:
+      - ./scenarios/:/scenarios/
+    ports:
+      - 5061:5060/udp
+    networks:
+      hypa:
+        ipv4_address: 172.23.0.11
+
+  uac-tc03:
+    container_name: uac-tc03
+    image: sipp:3.7.2
+    entrypoint: "tail -f /dev/null"
+    volumes:
+      - ./scenarios/:/scenarios/
+    ports:
+      - 5062:5060/udp
+    networks:
+      hypa:
+        ipv4_address: 172.23.0.12
+
+  uac-tc04:
+    container_name: uac-tc04
+    image: sipp:3.7.2
+    entrypoint: "tail -f /dev/null"
+    volumes:
+      - ./scenarios/:/scenarios/
+    ports:
+      - 5064:5060/udp
+    networks:
+      hypa:
+        ipv4_address: 172.23.0.14
+
+  uac-tc05:
+    container_name: uac-tc05
+    image: sipp:3.7.2
+    entrypoint: "tail -f /dev/null"
+    volumes:
+      - ./scenarios/:/scenarios/
+    ports:
+      - 5065:5060/udp
+    networks:
+      hypa:
+        ipv4_address: 172.23.0.15
+
+  uac-tc06:
+    container_name: uac-tc06
+    image: sipp:3.7.2
+    entrypoint: "tail -f /dev/null"
+    volumes:
+      - ./scenarios/:/scenarios/
+    ports:
+      - 5066:5060/udp
+    networks:
+      hypa:
+        ipv4_address: 172.23.0.16
+
+  uac-tc07:
+    container_name: uac-tc07
+    image: sipp:3.7.2
+    entrypoint: "tail -f /dev/null"
+    volumes:
+      - ./scenarios/:/scenarios/
+    ports:
+      - 5067:5060/udp
+    networks:
+      hypa:
+        ipv4_address: 172.23.0.17
+
+  uac-tc08:
+    container_name: uac-tc08
+    image: sipp:3.7.2
+    entrypoint: "tail -f /dev/null"
+    volumes:
+      - ./scenarios/:/scenarios/
+    ports:
+      - 5068:5060/udp
+    networks:
+      hypa:
+        ipv4_address: 172.23.0.18
+
+  uac-tc09:
+    container_name: uac-tc09
+    image: sipp:3.7.2
+    entrypoint: "tail -f /dev/null"
+    volumes:
+      - ./scenarios/:/scenarios/
+    ports:
+      - 5069:5060/udp
+    networks:
+      hypa:
+        ipv4_address: 172.23.0.19
+
+  uac-tc10:
+    container_name: uac-tc10
+    image: sipp:3.7.2
+    entrypoint: "tail -f /dev/null"
+    volumes:
+      - ./scenarios/:/scenarios/
+    ports:
+      - 5070:5060/udp
+    networks:
+      hypa:
+        ipv4_address: 172.23.0.20
+
+  uac-tc11:
+    container_name: uac-tc11
+    image: sipp:3.7.2
+    entrypoint: "tail -f /dev/null"
+    volumes:
+      - ./scenarios/:/scenarios/
+    ports:
+      - 5071:5060/udp
+    networks:
+      hypa:
+        ipv4_address: 172.23.0.21
+
+  uac-tc12:
+    container_name: uac-tc12
+    image: sipp:3.7.2
+    entrypoint: "tail -f /dev/null"
+    volumes:
+      - ./scenarios/:/scenarios/
+    ports:
+      - 5072:5060/udp
+    networks:
+      hypa:
+        ipv4_address: 172.23.0.22
+
+  uac-tc13:
+    container_name: uac-tc13
+    image: sipp:3.7.2
+    entrypoint: "tail -f /dev/null"
+    volumes:
+      - ./scenarios/:/scenarios/
+    ports:
+      - 5073:5060/udp
+    networks:
+      hypa:
+        ipv4_address: 172.23.0.23
+
+  uac-tc14:
+    container_name: uac-tc14
+    image: sipp:3.7.2
+    entrypoint: "tail -f /dev/null"
+    volumes:
+      - ./scenarios/:/scenarios/
+    ports:
+      - 5074:5060/udp
+    networks:
+      hypa:
+        ipv4_address: 172.23.0.24
+
+  uac-tc15:
+    container_name: uac-tc15
+    image: sipp:3.7.2
+    entrypoint: "tail -f /dev/null"
+    volumes:
+      - ./scenarios/:/scenarios/
+    ports:
+      - 5075:5060/udp
+    networks:
+      hypa:
+        ipv4_address: 172.23.0.25
+
+  uac-tc16:
+    container_name: uac-tc16
+    image: sipp:3.7.2
+    entrypoint: "tail -f /dev/null"
+    volumes:
+      - ./scenarios/:/scenarios/
+    ports:
+      - 5076:5060/udp
+    networks:
+      hypa:
+        ipv4_address: 172.23.0.26
+
+  uac-tc17:
+    container_name: uac-tc17
+    image: sipp:3.7.2
+    entrypoint: "tail -f /dev/null"
+    volumes:
+      - ./scenarios/:/scenarios/
+    ports:
+      - 5077:5060/udp
+    networks:
+      hypa:
+        ipv4_address: 172.23.0.27
+
+  uac-tc18:
+    container_name: uac-tc18
+    image: sipp:3.7.2
+    entrypoint: "tail -f /dev/null"
+    volumes:
+      - ./scenarios/:/scenarios/
+    ports:
+      - 5078:5060/udp
+    networks:
+      hypa:
+        ipv4_address: 172.23.0.28
+
+  uac-tc19:
+    container_name: uac-tc19
+    image: sipp:3.7.2
+    entrypoint: "tail -f /dev/null"
+    volumes:
+      - ./scenarios/:/scenarios/
+    ports:
+      - 5079:5060/udp
+    networks:
+      hypa:
+        ipv4_address: 172.23.0.29
+
+  uac-tc20:
+    container_name: uac-tc20
+    image: sipp:3.7.2
+    entrypoint: "tail -f /dev/null"
+    volumes:
+      - ./scenarios/:/scenarios/
+    ports:
+      - 5080:5060/udp
+    networks:
+      hypa:
+        ipv4_address: 172.23.0.30
+
+  uac-tc21:
+    container_name: uac-tc21
+    image: sipp:3.7.2
+    entrypoint: "tail -f /dev/null"
+    volumes:
+      - ./scenarios/:/scenarios/
+    ports:
+      - 5081:5060/udp
+    networks:
+      hypa:
+        ipv4_address: 172.23.0.31
+
+  uac-tc22:
+    container_name: uac-tc22
+    image: sipp:3.7.2
+    entrypoint: "tail -f /dev/null"
+    volumes:
+      - ./scenarios/:/scenarios/
+    ports:
+      - 5082:5060/udp
+    networks:
+      hypa:
+        ipv4_address: 172.23.0.32
+
+  uac-tc23:
+    container_name: uac-tc23
+    image: sipp:3.7.2
+    entrypoint: "tail -f /dev/null"
+    volumes:
+      - ./scenarios/:/scenarios/
+    ports:
+      - 5083:5060/udp
+    networks:
+      hypa:
+        ipv4_address: 172.23.0.33
+
+  uac-tc24:
+    container_name: uac-tc24
+    image: sipp:3.7.2
+    entrypoint: "tail -f /dev/null"
+    volumes:
+      - ./scenarios/:/scenarios/
+    ports:
+      - 5084:5060/udp
+    networks:
+      hypa:
+        ipv4_address: 172.23.0.34
+
+  uas:
+    container_name: uas
+    image: sipp:3.7.2
+    entrypoint: "tail -f /dev/null"
+    volumes:
+      - ./scenarios/:/scenarios/
+    ports:
+      - 5063:5060/udp
+    networks:
+      hypa:
+        ipv4_address: 172.23.0.35
+
+networks:
+  hypa:
+    name: hypa
+    ipam:
+      config:
+        - subnet: 172.23.0.0/24
